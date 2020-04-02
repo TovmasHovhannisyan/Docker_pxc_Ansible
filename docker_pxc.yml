@@ -1,0 +1,43 @@
+---
+
+ - name: setup pre-requisites
+   hosts: all
+   become: yes
+   roles:
+     - Install_Packages
+
+ - name: Docker swarm init
+   hosts: swarm_manager
+   become: yes
+   roles: 
+     - Docker_swarm_init 
+
+ - name: Swarm join node1
+   hosts: swarm_join_node1
+   become: yes
+   roles: 
+     - Docker_swarm_join
+
+ - name: Swarm join node2
+   hosts: swarm_join_node2
+   become: yes
+   roles: 
+     - Docker_swarm_join
+ 
+ - name: Docker create service and pxc bootstrap container
+   hosts: swarm_manager
+   become: yes
+   roles: 
+     - Docker_create_service_pxc_bootstrap_container
+
+ - name: Docker pxc container 2
+   hosts: swarm_join_node1
+   become: yes
+   roles: 
+   - Docker_container_pxc
+ 
+ - name: Docker pxc container 3
+   hosts: swarm_join_node2
+   become: yes
+   roles: 
+     - Docker_container_pxc 

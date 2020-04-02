@@ -1,0 +1,22 @@
+---
+
+- name: Check if Swarm is Already Initialized
+  shell: docker node ls
+  register: swarm_status
+  ignore_errors: true
+  
+- name: Init a new swarm with default parameters
+  docker_swarm:
+     state: present
+  when: swarm_status.rc != 0
+  
+- name: Swarm token var 
+  shell: docker swarm join-token -q worker
+  register: swarm
+- debug: var=swarm.stdout
+
+- name: Setup an overlay network master
+  docker_network:
+   name: "{{ overlay_network_pxc }}"
+   driver: overlay
+   attachable: yes

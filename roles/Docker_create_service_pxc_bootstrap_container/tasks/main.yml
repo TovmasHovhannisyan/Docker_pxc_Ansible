@@ -1,0 +1,37 @@
+---
+
+  - name: Set command and arguments
+    docker_swarm_service:
+      name: "{{ service_name }}"
+      mode: replicated
+      replicas: 3
+      networks:
+      - "{{ overlay_network_pxc }}"
+      image: alpine
+      command: sleep
+      args:
+        - "3600"
+  
+  - name: Create a data container
+    docker_container:
+      name: "{{ pxc_bootstrap }}"
+      image: percona/percona-xtradb-cluster:5.7
+      env:
+        MYSQL_ROOT_PASSWORD: "{{ mysql_root_pass }}"
+        CLUSTER_NAME: "{{ percona_cluster_name }}"      
+      networks_cli_compatible: yes  
+      networks:
+        - name: "{{ overlay_network_pxc }}"
+        
+  
+  - name: Check mysql status
+    shell: "docker exec -u root -it {{ pxc_bootstrap }}  mysql -uroot -proot -Bse 'show databases;'"
+    register: mysql_status
+    until: mysql_status.rc == 0
+    retries: 10
+    delay: 10
+
+
+
+
+  

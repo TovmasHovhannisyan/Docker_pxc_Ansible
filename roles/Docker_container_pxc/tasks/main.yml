@@ -1,0 +1,17 @@
+---
+
+  
+  - name: Create pxc container
+    docker_container:
+      name: "{{ ansible_hostname }}"
+      image: percona/percona-xtradb-cluster:5.7
+      env:
+         MYSQL_ROOT_PASSWORD: "{{ mysql_root_pass }}"
+         CLUSTER_NAME: "{{ percona_cluster_name }}"
+         CLUSTER_JOIN: "{{ pxc_bootstrap }}"
+      networks_cli_compatible: yes
+      networks:
+         - name: "{{ overlay_network_pxc }}"
+
+  
+  

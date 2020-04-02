@@ -1,0 +1,19 @@
+---
+
+#  The name overlay network
+overlay_network_pxc: pxc_network
+
+# Docker service name
+service_name: myservice
+
+# Pxc bootstrap container name 
+pxc_bootstrap: bootstrap
+
+# Mysl root password
+mysql_root_pass: root
+
+# Percona Xtradb Cluster name
+percona_cluster_name: cluster1 
+
+
+
