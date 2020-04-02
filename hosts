@@ -1,0 +1,11 @@
+#ansible_host      - Enter Your Hosts IP Address
+#ansible_user      - Enter Your Username
+#ansible_ssh_pass  - Enter Your Password
+#ansible_sudo_pass - Enter Your Sudo Password 
+
+
+[nodes]
+
+swarm_manager ansible_host=  ansible_user= ansible_ssh_pass= ansible_sudo_pass=   
+swarm_join_node1 ansible_host= ansible_user= ansible_ssh_pass= ansible_sudo_pass=
+swarm_join_node2 ansible_host= ansible_user= ansible_ssh_pass= ansible_sudo_pass=
